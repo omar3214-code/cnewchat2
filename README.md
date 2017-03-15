@@ -1,2 +1,2 @@
 # nodejs-videochat
-Live stream video chat app using nodejs
+Video chat app using webrtc and node.js/socket.io.
