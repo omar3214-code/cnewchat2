@@ -39,10 +39,16 @@ function handleIceCandidate(event) {
 function handleRemoteStreamAdded(event) {
   console.log("Remote stream added");
   displayRemoteVideo(event.stream);
+  call.setAttribute("disabled", true);
+  end.removeAttribute("disabled");
 }
 
 function handleRemoteStreamRemoved(event) {
   console.log("Remote stream removed: " + event);
+  end.setAttribute("disabled", true);
+  call.removeAttribute("disabled");
+  local.src = "";
+  remote.src = "";
 }
 
 function handleNegotiationNeeded() {
@@ -86,7 +92,7 @@ function sendMessage(message) {
   socket.emit("message", message);
 }
 
-// receiving stream
+/////// receiving stream //////////
 socket.on("message", function(evt){
   if(!pc)
     createPeerConnection();

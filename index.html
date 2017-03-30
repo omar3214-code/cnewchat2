@@ -27,12 +27,12 @@
         console.log("document loaded");
         call.removeAttribute("disabled");
         call.addEventListener("click", function(){
-          getUserMedia(displayLocalVideo);
-          sendStream(localStream);
+          createPeerConnection();
           call.setAttribute("disabled", true);
           end.removeAttribute("disabled");
         });
         end.addEventListener("click", function() {
+          // change rooms
           end.setAttribute("disabled", true);
           call.removeAttribute("disabled");
         });
