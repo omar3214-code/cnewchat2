@@ -3,6 +3,7 @@ var http = require("http").Server(app);
 var fs = require("fs");
 var io = require("socket.io")(http);
 
+// handling files
 app.get('/', onRequest);
 app.get('/js/client.js', function(req, res) {
   res.sendFile(__dirname + "/js/client.js");
@@ -35,13 +36,17 @@ function onRequest(request, response) {
   fs.createReadStream("./index.html").pipe(response);
 }
 
+
+// someone connects to a room
 io.on('connection', function(socket) {
   console.log("a user connected");
-  socket.on('stream', function(stream) {
-    console.log("server receiving stream");
-    socket.broadcast.emit("stream", stream);
+  
+  //relay the stream
+  socket.on("message", function(message) {
+    socket.broadcast.emit("message", message);
   });
-socket.on('disconnect', function () {
+
+  socket.on('disconnect', function () {
     console.log("user disconnected");
   });
 });
